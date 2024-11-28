@@ -1,0 +1,130 @@
+/* Container for the entire component */
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Section for each date */
+.dateSection {
+    margin-bottom: 40px;
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Date heading */
+.dateSection h3 {
+    color: #2c3e50;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+/* Card container for food items */
+.dateCardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Styling for individual food cards */
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 260px;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Card title (food name) styling */
+.card h4 {
+    color: #2c3e50;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+/* Paragraphs inside cards */
+.card p {
+    margin: 10px 0;
+    font-size: 1rem;
+    color: #34495e;
+}
+
+/* Styling for bold text */
+.card p strong {
+    color: #007bff;
+    font-weight: 600;
+}
+
+/* Meal type flex container for Lunch and Dinner */
+.mealType {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+/* Lunch and Dinner text styles */
+.lunch {
+    background-color: #ffeb3b;
+    color: #2c3e50;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-weight: 600;
+}
+
+.dinner {
+    background-color: #ff7043;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-weight: 600;
+}
+
+/* Loader styling */
+.loading {
+    font-size: 1.2rem;
+    color: #007bff;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Error message styling */
+.error {
+    color: #e74c3c;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .card {
+        width: 100%;
+    }
+
+    .dateSection h3 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        width: 100%;
+        padding: 15px;
+    }
+}

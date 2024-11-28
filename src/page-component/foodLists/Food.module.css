@@ -1,0 +1,145 @@
+/* General Styling */
+.heading {
+  font-size: 28px;
+  font-weight: 900;
+  text-align: center;
+  margin-top: 20px;
+  color: #333;
+}
+
+/* Table Styling */
+.tableContainer {
+  width: 100%;
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+.table th {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: bold;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Date Row */
+.dateRow {
+  background-color: #f2f2f2;
+  text-align: center;
+}
+
+.dateColumn {
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 10px;
+  background-color: #e0e0e0;
+}
+
+/* Action and Total Price */
+.eyeIcon {
+  cursor: pointer;
+  color: #007bff;
+}
+
+.totalPriceContainer {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  width: auto;
+  float: right;
+}
+
+.totalPrice {
+  color: #28a745;
+}
+
+.paginationContainer {
+  margin-top: 10px;
+}
+
+.pagination {
+  justify-content: flex-end;
+}
+
+.page-item.disabled .page-link {
+  color: #ccc;
+}
+
+.page-item.active .page-link {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.page-item .page-link {
+  cursor: pointer;
+}
+
+/* Loader and Error Message */
+.loader, .error {
+  text-align: center;
+  font-size: 16px;
+  color: #ff0000;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1024px) {
+  .heading {
+    font-size: 24px;
+    margin-top: 15px;
+  }
+
+  .table th, .table td {
+    padding: 8px;
+  }
+
+  .totalPriceContainer {
+    font-size: 18px;
+    padding: 8px;
+    float: none;
+    text-align: center;
+  }
+
+  .pagination {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .heading {
+    font-size: 22px;
+    margin-top: 12px;
+  }
+
+  .table th, .table td {
+    padding: 6px;
+  }
+
+  .totalPriceContainer {
+    font-size: 16px;
+    padding: 6px;
+  }
+}

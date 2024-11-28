@@ -1,0 +1,144 @@
+/* Container and layout */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    background-color: #1a0707;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .subHeader {
+    font-size: 1.5rem;
+    color: #555;
+    margin-bottom: 15px;
+  }
+  
+  /* QR code and image */
+  .qrCode {
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+  }
+  
+  /* Loading and error messages */
+  .loading, .error {
+    font-size: 1.2rem;
+    color: #007bff;
+  }
+  
+  .error {
+    color: #ff4d4d;
+  }
+  
+  /* No QR code message */
+  .noQr {
+    font-size: 1.2rem;
+    color: #666;
+    margin-top: 20px;
+  }
+
+  /* Whatsapp.module.css */
+.retryButton {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+  
+ /* Whatsapp.module.css */
+.successMessage {
+    color: #4caf50;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  
+  .retryButton {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+  
+  .retryButton:hover {
+    background-color: #45a049;
+  }
+  
+  .noQr {
+    color: #ff0000;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .loading, .error {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .error {
+    color: red;
+  }
+  
+  .container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .qrCode {
+    margin: 20px auto;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .header {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .subHeader {
+    font-size: 18px;
+    margin-top: 20px;
+  }
+  
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .container {
+      padding: 15px;
+    }
+  
+    .header {
+      font-size: 2rem;
+    }
+  
+    .subHeader {
+      font-size: 1.2rem;
+    }
+  
+    .qrCode {
+      max-width: 90%;
+    }
+  }
+  
+

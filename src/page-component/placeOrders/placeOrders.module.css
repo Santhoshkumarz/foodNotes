@@ -1,0 +1,401 @@
+/* Main Container */
+.placeOrdersContainer {
+  padding: 30px;
+  font-family: 'Arial', sans-serif;
+  background-color: #f7f8fa;
+  border-radius: 10px;
+  max-width: 900px;
+  margin: 30px auto;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  overflow: hidden;
+}
+
+.placeOrdersContainer:hover {
+  transform: translateY(-5px);
+}
+
+/* Heading */
+.heading {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 25px;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Food Items List */
+.foodItemsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Individual Food Item */
+.foodItem {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.foodItem:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Food Image */
+.foodImageContainer {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.foodImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Food Details */
+.foodDetails {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.foodPrice {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 10px;
+}
+
+/* Quantity Controls */
+.quantityControls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.quantity {
+  font-size: 16px;
+  color: #555;
+}
+
+.changeQuantityBtn {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.changeQuantityBtn:hover {
+  background-color: #218838;
+}
+
+/* Total Price Section */
+.totalPriceContainer {
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.totalPrice {
+  font-size: 22px;
+}
+
+/* Buttons */
+.orderBtn,
+.cancelBtn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 25px;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+.orderBtn:hover,
+.cancelBtn:hover {
+  background-color: #0056b3;
+}
+
+.cancelBtn {
+  background-color: #d9534f;
+}
+
+.cancelBtn:hover {
+  background-color: #c9302c;
+}
+
+/* Popup Container */
+.popupContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.popup h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.popup p {
+  font-size: 16px;
+}
+
+/* Quantity Popup */
+.quantityPopupContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quantityPopup {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 400px;
+  text-align: center;
+}
+
+.quantityOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.quantityOptionBtn {
+  background-color: #17a2b8;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.quantityOptionBtn:hover {
+  background-color: #138496;
+}
+
+.closeBtn {
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 20px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.closeBtn:hover {
+  background-color: #5a6268;
+}
+
+/* Responsive Media Queries */
+/* For extra large devices (desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .placeOrdersContainer {
+    padding: 40px;
+  }
+
+  .foodItem {
+    padding: 25px;
+  }
+
+  .foodImageContainer {
+    width: 120px;
+    height: 120px;
+  }
+
+  .heading {
+    font-size: 32px;
+  }
+
+  .totalPriceContainer {
+    font-size: 24px;
+  }
+
+  .orderBtn,
+  .cancelBtn {
+    font-size: 20px;
+    padding: 12px 30px;
+  }
+}
+
+/* For large devices (desktops, 992px to 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .placeOrdersContainer {
+    padding: 35px;
+  }
+
+  .foodItem {
+    padding: 22px;
+  }
+
+  .foodImageContainer {
+    width: 110px;
+    height: 110px;
+  }
+
+  .heading {
+    font-size: 30px;
+  }
+
+  .totalPriceContainer {
+    font-size: 22px;
+  }
+
+  .orderBtn,
+  .cancelBtn {
+    font-size: 18px;
+    padding: 10px 25px;
+  }
+}
+
+/* For medium devices (tablets, 768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .placeOrdersContainer {
+    padding: 30px;
+  }
+
+  .foodItem {
+    padding: 20px;
+  }
+
+  .foodImageContainer {
+    width: 100px;
+    height: 100px;
+  }
+
+  .heading {
+    font-size: 28px;
+  }
+
+  .totalPriceContainer {
+    font-size: 20px;
+  }
+
+  .orderBtn,
+  .cancelBtn {
+    font-size: 16px;
+    padding: 8px 20px;
+  }
+}
+
+/* For small devices (phones, 576px to 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+  .placeOrdersContainer {
+    padding: 20px;
+  }
+
+  .foodItem {
+    flex-direction: column;
+    padding: 18px;
+  }
+
+  .foodImageContainer {
+    width: 90px;
+    height: 90px;
+  }
+
+  .heading {
+    font-size: 24px;
+  }
+
+  .foodPrice {
+    font-size: 16px;
+  }
+
+  .totalPriceContainer {
+    font-size: 18px;
+  }
+
+  .orderBtn,
+  .cancelBtn {
+    font-size: 14px;
+    padding: 7px 18px;
+  }
+}
+
+/* For extra small devices (phones, less than 576px) */
+@media (max-width: 575px) {
+  .placeOrdersContainer {
+    padding: 15px;
+  }
+
+  .foodItem {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 15px;
+  }
+
+  .foodImageContainer {
+    width: 80px;
+    height: 80px;
+  }
+
+  .heading {
+    font-size: 22px;
+  }
+
+  .foodPrice {
+    font-size: 14px;
+  }
+
+  .totalPriceContainer {
+    font-size: 16px;
+  }
+
+  .orderBtn,
+  .cancelBtn {
+    font-size: 12px;
+    padding: 6px 15px;
+  }
+}
