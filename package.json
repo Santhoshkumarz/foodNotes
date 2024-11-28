@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
+    "start": "node dist/app.js",
+    "dev": "next dev"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
@@ -17,9 +17,11 @@
     "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
+    "@types/node": "^20.17.9",
+    "@types/react": "^18.3.12",
     "@types/react-dom": "^18",
-    "typescript": "^5"
+    "rimraf": "^6.0.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.7.2"
   }
 }
