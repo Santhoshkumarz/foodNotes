@@ -1,18 +1,25 @@
 "use client";
 
 import React, { useState, useCallback, useMemo } from "react";
-import dummyData from "../../config/FoodsData";
-import styles from "./AddToCart.module.css";
+import styles from './AddToCart.module.css'
+
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
+import dummyData from "@/config/FoodsData";
 
+interface Food {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+}
 const AddToCarts = () => {
   const router = useRouter();
   const { selectedFoods, addFood, removeFood, clearCart } = useCart();
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleAddToCart = useCallback(
-    (food: any) => {
+    (food: Food) => {
       addFood(food);
     },
     [addFood]
