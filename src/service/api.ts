@@ -1,5 +1,5 @@
 // Define the API URL
-const API_URL = 'http://localhost:3001';
+const API_URL = 'http://localhost:3007';
 
 // Type for the food object (adjust this to match your actual data structure)
 interface Food {

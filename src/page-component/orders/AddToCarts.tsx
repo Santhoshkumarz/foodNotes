@@ -1,73 +1,39 @@
+"use client";
+
 import React, { useState, useCallback, useMemo } from "react";
 import dummyData from "../../config/FoodsData";
 import styles from "./AddToCart.module.css";
 import { useRouter } from "next/navigation";
-
-interface FoodItem {
-  id: number;
-  image: string;
-  name: string;
-  price: number;
-  mealType?: string;
-}
+import { useCart } from "@/context/CartContext";
 
 const AddToCarts = () => {
   const router = useRouter();
-  const [cart, setCart] = useState(new Set<number>());
+  const { selectedFoods, addFood, removeFood, clearCart } = useCart();
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleAddToCart = useCallback((id: number) => {
-    setCart((prev) => new Set(prev).add(id));
-  }, []);
+  const handleAddToCart = useCallback(
+    (food: any) => {
+      addFood(food);
+    },
+    [addFood]
+  );
 
-  const handleCancel = useCallback((id: number) => {
-    setCart((prev) => {
-      const updatedCart = new Set(prev);
-      updatedCart.delete(id);
-      return updatedCart;
-    });
-  }, []);
-
-  const clearSelectedFoods = useCallback(() => {
-    setCart(new Set());
-  }, []);
-
-  const totalPrice = useMemo(
-    () =>
-      dummyData.reduce(
-        (acc, food) => (cart.has(food.id) ? acc + food.price : acc),
-        0
-      ),
-    [cart]
+  const handleCancel = useCallback(
+    (id: number) => {
+      removeFood(id);
+    },
+    [removeFood]
   );
 
   const orderToPlace = useCallback(() => {
-    const selectedFoods = dummyData.filter((food) => cart.has(food.id));
-    const updatedSelectedFoods = selectedFoods.map((food) => ({
-      ...food,
-      mealType: getMealTypeByTime(),
-    }));
-    const selectedFoodsStr = encodeURIComponent(
-      JSON.stringify(updatedSelectedFoods)
-    );
-    router.push(`/placeOrder?selectedFoods=${selectedFoodsStr}`);
-    clearSelectedFoods();
-    console.log("selectedFoods", updatedSelectedFoods);
-  }, [cart, router, clearSelectedFoods]);
+    router.push("/placeOrder");
+  }, [router]);
 
-  const getMealTypeByTime = () => {
-    const currentHour = new Date().getHours();
+  const totalPrice = useMemo(
+    () => selectedFoods.reduce((acc, food) => acc + food.price, 0),
+    [selectedFoods]
+  );
 
-    if (currentHour < 12) {
-      return "Breakfast";
-    } else if (currentHour >= 12 && currentHour < 18) {
-      return "Lunch";
-    } else {
-      return "Dinner";
-    }
-  };
-
-  // Filter foods based on search term
   const filteredData = useMemo(() => {
     return searchTerm.length >= 2
       ? dummyData.filter((food) =>
@@ -78,7 +44,6 @@ const AddToCarts = () => {
 
   return (
     <>
-      {/* Search Bar */}
       <div className={styles.searchBarContainer}>
         <input
           type="text"
@@ -96,15 +61,16 @@ const AddToCarts = () => {
               src={food.image}
               alt={food.name}
               className={styles.foodImage}
-              onClick={() => !cart.has(food.id) && handleAddToCart(food.id)}
+              onClick={() => handleAddToCart(food)}
             />
             <div className={styles.foodDetails}>
               <h3 className={styles.foodName}>{food.name}</h3>
               <p className={styles.foodPrice}>
                 Price: ${food.price.toFixed(2)}
               </p>
-
-              {cart.has(food.id) ? (
+              {selectedFoods.some(
+                (selectedFood) => selectedFood.id === food.id
+              ) ? (
                 <button
                   onClick={() => handleCancel(food.id)}
                   className={styles.cancelButton}
@@ -113,7 +79,7 @@ const AddToCarts = () => {
                 </button>
               ) : (
                 <button
-                  onClick={() => handleAddToCart(food.id)}
+                  onClick={() => handleAddToCart(food)}
                   className={styles.addButton}
                 >
                   Add to Cart

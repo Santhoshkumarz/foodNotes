@@ -1,106 +1,33 @@
 import React, { useState, useEffect } from "react";
 import styles from "./placeOrders.module.css";
 import { useRouter } from "next/navigation";
+import { useCart } from "@/context/CartContext";
 import { createOrder } from "@/service/orderService";
 
-interface Food {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  mealType: string;
-}
-
-interface PlaceOrdersProps {
-  selectedFoods: Food[];
-}
-
-const PlaceOrders = ({ selectedFoods }: PlaceOrdersProps) => {
+const PlaceOrders = () => {
+  const { selectedFoods, clearCart } = useCart(); // Using useCart for selectedFoods and clearCart
   const router = useRouter();
+
   const [foodQuantities, setFoodQuantities] = useState<{ [key: number]: number }>({});
-  const [isOrderPlaced, setIsOrderPlaced] = useState(false);
-  const [orderDetails, setOrderDetails] = useState<any | null>(null);
   const [isQuantityPopupOpen, setIsQuantityPopupOpen] = useState(false);
   const [selectedFoodId, setSelectedFoodId] = useState<number | null>(null);
+  const [isOrderPlaced, setIsOrderPlaced] = useState(false);
+  const [orderDetails, setOrderDetails] = useState<any>(null);
 
   useEffect(() => {
+    // Initialize quantities with a default value of 1 for each selected food item
     const initialQuantities = selectedFoods.reduce((quantities, food) => {
-      quantities[food.id] = 1; // Initial quantity of 1
+      quantities[food.id] = 1;
       return quantities;
     }, {} as { [key: number]: number });
     setFoodQuantities(initialQuantities);
   }, [selectedFoods]);
 
   const changeQuantity = (id: number, value: number) => {
-    setFoodQuantities((prev) => {
-      const newQuantities = { ...prev };
-      newQuantities[id] = value;
-      return newQuantities;
-    });
-  };
-
-  const handleBack = () => {
-    router.push("/addToCarts");
-  };
-
-  const handlePlaceOrder = async () => {
-    const currentDate = new Date().toISOString().slice(0, 19).replace("T", " ");
-    const totalPrice = selectedFoods.reduce((total, food) => {
-      return total + food.price * foodQuantities[food.id];
-    }, 0);
-  
-    const order = {
-      order_date: currentDate,
-      items: selectedFoods.map((food) => ({
-        id: food.id,
-        name: food.name,
-        price: food.price,
-        quantity: foodQuantities[food.id],
-        mealType: food.mealType,
-      })),
-      totalPrice: totalPrice.toFixed(2),
-    };
-  
-    try {
-      // Create the order
-      const response = await createOrder(order);
-      setOrderDetails(order);
-      setIsOrderPlaced(true);
-  
-      // Send WhatsApp message to the group
-      const message = `New Order Placed!\nOrder Date: ${order.order_date}\nItems: ${order.items.map(item => `${item.name} x ${item.quantity}`).join(', ')}\nTotal Price: $${order.totalPrice}`;
-      const groupName = "Test"; // Replace with your actual group name
-  
-      // Send message to the WhatsApp group
-      await fetch("http://localhost:3001/api/whatsapp/send", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          groupName,
-          message,  
-        }),
-      });
-  
-      console.log("Message sent to WhatsApp group!");
-  
-    } catch (error) {
-      console.error("Error placing order or sending message:", error);
-      alert("There was an issue placing your order or sending the message. Please try again.");
-    }
-  };
-  
-
-  const handleCancelOrder = () => {
-    setIsOrderPlaced(false);
-    handleBack();
+    setFoodQuantities((prev) => ({ ...prev, [id]: value }));
   };
 
   const openQuantityPopup = (foodId: number) => {
-    if (isQuantityPopupOpen && selectedFoodId !== foodId) {
-      closeQuantityPopup();
-    }
     setSelectedFoodId(foodId);
     setIsQuantityPopupOpen(true);
   };
@@ -117,9 +44,45 @@ const PlaceOrders = ({ selectedFoods }: PlaceOrdersProps) => {
     closeQuantityPopup();
   };
 
-  const totalPrice = selectedFoods.reduce((total, food) => {
-    return total + food.price * foodQuantities[food.id];
-  }, 0);
+  const totalPrice = selectedFoods.reduce(
+    (total, food) => total + food.price * foodQuantities[food.id],
+    0
+  );
+
+  const handlePlaceOrder = async () => {
+    const currentDate = new Date().toISOString().slice(0, 19).replace("T", " ");
+    
+    // Create the order object
+    const order: any = {
+      order_date: currentDate,
+      items: selectedFoods.map((food) => ({
+        id: food.id,
+        name: food.name,
+        price: food.price,
+        quantity: foodQuantities[food.id],
+        mealType: food.mealType,
+      })),
+      totalPrice: Number(totalPrice.toFixed(2)),
+    };
+
+    try {
+      // Call createOrder API
+      const response = await createOrder(order);
+      console.log("Order placed successfully:", response);
+      setIsOrderPlaced(true);
+      setOrderDetails(order);
+
+    } catch (error) {
+      console.error("Error placing order:", error);
+      alert("Failed to place the order. Please try again.");
+    }
+  };
+
+  const closeOrderModal = () => {
+    setIsOrderPlaced(false);
+    setOrderDetails(null);
+    router.push("/");
+  };
 
   return (
     <div className={styles.placeOrdersContainer}>
@@ -150,35 +113,19 @@ const PlaceOrders = ({ selectedFoods }: PlaceOrdersProps) => {
       ) : (
         <p>No items selected.</p>
       )}
+
       <div className={styles.totalPriceContainer}>
         <span className={styles.totalPrice}>Total Price: ${totalPrice.toFixed(2)}</span>
       </div>
-      <button className={styles.orderBtn} onClick={handlePlaceOrder}>
-        Place Order
-      </button>
 
-      {isOrderPlaced && orderDetails && (
-        <div className={styles.popupContainer}>
-          <div className={styles.popup}>
-            <h3>Order Placed Successfully!</h3>
-            <p>Your order has been placed on: {orderDetails.date}</p>
-            <div>
-              <h4>Order Summary:</h4>
-              <ul>
-                {orderDetails.items.map((item: any) => (
-                  <li key={item.id}>
-                    {item.name} ({item.mealType}) - ${item.price.toFixed(2)} x {item.quantity}
-                  </li>
-                ))}
-              </ul>
-              <p>Total Price: ${orderDetails.totalPrice}</p>
-            </div>
-            <button className={styles.cancelBtn} onClick={handleCancelOrder}>
-              <i className="fas fa-times"></i> Okay
-            </button>
-          </div>
-        </div>
-      )}
+      <div className={styles.buttonGroup}>
+        <button className={styles.orderBtn} onClick={handlePlaceOrder}>
+          Place Order
+        </button>
+        <button className={styles.orderBtn} onClick={clearCart}>
+          Clear Cart
+        </button>
+      </div>
 
       {isQuantityPopupOpen && (
         <div className={styles.quantityPopupContainer}>
@@ -196,6 +143,27 @@ const PlaceOrders = ({ selectedFoods }: PlaceOrdersProps) => {
               ))}
             </div>
             <button className={styles.closeBtn} onClick={closeQuantityPopup}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {isOrderPlaced && orderDetails && (
+        <div className={styles.orderModal}>
+          <div className={styles.orderModalContent}>
+            <h2>Order Placed Successfully!</h2>
+            <p>Order Date: {orderDetails.order_date}</p>
+            <h3>Order Summary:</h3>
+            <ul>
+              {orderDetails.items.map((item: any) => (
+                <li key={item.id}>
+                  {item.name} ({item.mealType}) - {item.quantity} x ${item.price.toFixed(2)}
+                </li>
+              ))}
+            </ul>
+            <p className={styles.totalPrice}>Total Price: ${orderDetails.totalPrice.toFixed(2)}</p>
+            <button className={styles.closeOrderBtn} onClick={closeOrderModal}>
               Close
             </button>
           </div>

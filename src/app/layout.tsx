@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import MainLayout from "@/layout/MainLayout";
+import { CartProvider } from "@/context/CartContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -60,14 +61,16 @@ export default function RootLayout({
         <link href="/css/bootstrap.min.css" rel="stylesheet" />
         <link href="/css/style.css" rel="stylesheet" />
         <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-pzjw8f+ua7Kw1TIq0XzSbzQLj+PdE7W3LBsz0rZvS5BdoATXtCbJkx5Jv7WTxidX"
-            crossOrigin="anonymous"
-          ></script>
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-pzjw8f+ua7Kw1TIq0XzSbzQLj+PdE7W3LBsz0rZvS5BdoATXtCbJkx5Jv7WTxidX"
+          crossOrigin="anonymous"
+        ></script>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <div className="container-xxl bg-white p-0">
-          <MainLayout>{children}</MainLayout>
+          <CartProvider>
+            <MainLayout>{children}</MainLayout>
+          </CartProvider>
         </div>
         <script
           src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"
